@@ -15,5 +15,7 @@ namespace Keepr.Server.Models
         public string Description { get; set; }="No description yet";
         public string ImgUrl { get; set; } = "//placehold.it/200x200";
         public bool IsPrivate { get; set; } = false;
+
+        public Profile Creator { get; set; }
     }
 }

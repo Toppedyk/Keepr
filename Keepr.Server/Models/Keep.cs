@@ -12,10 +12,10 @@ namespace Keepr.Server.Models
         public DateTime UpdatedAt { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Img { get; set; }
-        public int Views { get; set; }
-        public int Shares { get; set; }
-        public int Keeps { get; set; }
+        public string Img { get; set; }= "//placehold.it/200x200";
+        public int Views { get; set; } =0;
+        public int Shares { get; set; }=0;
+        public int Keeps { get; set; }=0;
         public Profile Creator { get; set; }
     }
 }

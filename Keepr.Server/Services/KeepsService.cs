@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using Keepr.Server.Models;
 using Keepr.Server.Repositories;
 
 namespace Keepr.Server.Services
@@ -10,5 +13,30 @@ namespace Keepr.Server.Services
         {
             _repo = ks;
         }
+
+    internal List<Keep> GetAll()
+    {
+      throw new NotImplementedException();
     }
+
+    internal Keep GetById(int id)
+    {
+      throw new NotImplementedException();
+    }
+
+    internal Keep Create(Keep k)
+    {
+      throw new NotImplementedException();
+    }
+
+    internal Keep Edit(Keep k, string id)
+    {
+      throw new NotImplementedException();
+    }
+
+    internal void Delete(int id1, string id2)
+    {
+      throw new NotImplementedException();
+    }
+  }
 }
