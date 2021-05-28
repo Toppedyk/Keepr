@@ -61,12 +61,17 @@ namespace Keepr.Server
 
             //Transient Services
             services.AddScoped<AccountService>();
+            services.AddTransient<KeepsService>();
+            services.AddTransient<VaultKeepsService>();
+            services.AddTransient<VaultsService>();
 
             //Transient Repos
             services.AddScoped<AccountsRepository>();
+            services.AddTransient<KeepsRepository>();
+            services.AddTransient<VaultKeepsRepository>();
+            services.AddTransient<VaultsRepository>();
 
             services.AddScoped<IDbConnection>(x => CreateDbConnection());
-
 
             services.AddSwaggerGen(c =>
             {
