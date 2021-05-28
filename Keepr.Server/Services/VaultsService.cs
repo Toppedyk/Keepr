@@ -43,5 +43,10 @@ namespace Keepr.Server.Services
     {
       throw new NotImplementedException();
     }
+
+    internal List<Vault> GetVaultsByProfileId(string id)
+    {
+      throw new NotImplementedException();
+    }
   }
 }

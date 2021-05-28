@@ -38,5 +38,10 @@ namespace Keepr.Server.Services
     {
       throw new NotImplementedException();
     }
+
+    internal List<Keep> GetKeepsByProfileId(string id)
+    {
+      throw new NotImplementedException();
+    }
   }
 }
