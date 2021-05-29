@@ -20,19 +20,19 @@ namespace Keepr.Server.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        public ActionResult<List<Vault>> GetAll()
-        {
-            try
-            {
-                List<Vault> vaults = _service.GetAll();
-                return Ok(vaults);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
+        // [HttpGet]
+        // public ActionResult<List<Vault>> GetAll()
+        // {
+        //     try
+        //     {
+        //         List<Vault> vaults = _service.GetAll();
+        //         return Ok(vaults);
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         return BadRequest(e.Message);
+        //     }
+        // }
 
         [HttpGet("{id}")]
         public ActionResult<Vault> GetById(int id)

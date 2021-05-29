@@ -8,45 +8,97 @@ namespace Keepr.Server.Services
     public class VaultsService
     {
         private readonly VaultsRepository _repo;
+    private readonly VaultKeepsRepository _repoVK;
 
-        public VaultsService(VaultsRepository vs)
+    public VaultsService(VaultsRepository vs, VaultKeepsRepository vkr)
         {
             _repo = vs;
+            _repoVK = vkr;
         }
 
-    internal List<Vault> GetAll()
-    {
-      throw new NotImplementedException();
-    }
+    // internal List<Vault> GetAll()
+    // {
+    //   return _repo.GetAll();
+    // }
 
     internal Vault GetById(int id)
     {
-      throw new NotImplementedException();
+      Vault vault = _repo.GetById(id);
+      if(vault == null)
+      {
+        throw new Exception("Invalid ID");
+      }
+      return vault;
     }
 
     internal List<VaultKeep> GetVaultKeeps(int id)
     {
-      throw new NotImplementedException();
+      return _repoVK.GetVaultKeeps(id);
+    }
+
+    internal List<Vault> GetVaultsByProfileId(string id, string userInfoId)
+    {
+      if(id == userInfoId){
+        return _repo.GetVaultsByAccountId(userInfoId);
+      }
+      return _repo.GetVaultsByProfileId(id);
     }
 
     internal Vault Create(Vault v)
     {
-      throw new NotImplementedException();
+      return _repo.Create(v);
     }
 
     internal Vault Edit(Vault v, string id)
     {
-      throw new NotImplementedException();
+      Vault original = GetById(v.Id);
+      if(original.CreatorId != id){
+        throw new Exception("You cannot edit this");
+      }
+      original.Name = v.Name.Length > 0 ? v.Name : original.Name;
+      original.Description= v.Description.Length > 0 ? v.Description : original.Description;
+      original.ImgUrl= v.ImgUrl.Length > 0 ? v.ImgUrl : original.ImgUrl;
+      original.IsPrivate= v.IsPrivate != v.IsPrivate ? v.IsPrivate : original.IsPrivate;
+      return _repo.Edit(original);
+    }
+    
+
+    internal void Delete(int id, string creatorId)
+    {
+      Vault vault = GetById(id);
+      if(vault.CreatorId != creatorId)
+      {
+        throw new Exception("You cannot delete another user's blog");
+      }
+      _repo.Delete(id);
     }
 
-    internal void Delete(int id1, string id2)
-    {
-      throw new NotImplementedException();
-    }
 
-    internal List<Vault> GetVaultsByProfileId(string id)
-    {
-      throw new NotImplementedException();
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   }
 }

@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.Data;
+using Keepr.Server.Models;
 
 namespace Keepr.Server.Repositories
 {
@@ -10,5 +13,20 @@ namespace Keepr.Server.Repositories
         {
             _db = db;
         }
+
+    internal List<VaultKeep> GetVaultKeeps(int id)
+    {
+      throw new NotImplementedException();
     }
+
+    internal VaultKeep Create(VaultKeep vk)
+    {
+      throw new NotImplementedException();
+    }
+
+    internal bool Delete(int id)
+    {
+      throw new NotImplementedException();
+    }
+  }
 }
