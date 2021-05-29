@@ -14,10 +14,12 @@ namespace Keepr.Server.Controllers
     public class KeepsController : ControllerBase
     {
         private readonly KeepsService _service;
+    private readonly AccountService _serviceAccount;
 
-        public KeepsController(KeepsService service)
+    public KeepsController(KeepsService service, AccountService acct)
         {
             _service = service;
+            _serviceAccount = acct;
         }
 
         [HttpGet]
@@ -48,16 +50,20 @@ namespace Keepr.Server.Controllers
             }
         }
 
-        [Authorize]
+        
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Keep>> Create([FromBody] Keep k)
         {
             try
             {
                 Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+                Account fullAccount = _serviceAccount.GetOrCreateProfile(userInfo);
                 k.CreatorId = userInfo.Id;
+
+                
                 Keep newK = _service.Create(k);
-                newK.Creator = userInfo;
+                newK.Creator = fullAccount;
                 return Ok(newK);
             }
             catch (Exception e)
