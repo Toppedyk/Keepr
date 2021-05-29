@@ -49,14 +49,10 @@ namespace Keepr.Server.Services
       original.Name = k.Name.Length > 0 ? k.Name : original.Name;
       original.Description = k.Description.Length > 0 ? k.Description : original.Description;
       original.Img = k.Img.Length > 0 ? k.Img : original.Img;
-      original.Views = k.Views != original.Views ? k.Views : original.Views;
-      original.Shares = k.Shares != original.Shares ? k.Shares : original.Shares;
-      original.Keeps = k.Keeps != original.Keeps ? k.Keeps : original.Keeps;
-      if(_repo.Edit(original))
-      {
-        return original;
-      }
-      throw new Exception("Something went Wrong");
+      original.Views = original.Views;
+      original.Shares = original.Shares;
+      original.Keeps = original.Keeps;
+      return _repo.Edit(original);
     }
 
     internal void Delete(int id, string creatorId)
@@ -66,10 +62,7 @@ namespace Keepr.Server.Services
       {
         throw new Exception("You cannot delete this!");
       }
-      if(!_repo.Delete(id))
-      {
-        throw new Exception("Something's Gone Wrong!");
-      }
+      _repo.Delete(id);
     }
 
 

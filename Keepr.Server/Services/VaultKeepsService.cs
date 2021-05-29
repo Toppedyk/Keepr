@@ -29,9 +29,7 @@ namespace Keepr.Server.Services
         throw new Exception("You cannot delete this");
       }
       //subtract from total keeps
-      if(!_repo.Delete(id)){
-        throw new Exception("Something's Gone Wrong!");
-      }
+      _repo.Delete(id);
     }
   }
 }

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using Dapper;
 using Keepr.Server.Models;
 
 namespace Keepr.Server.Repositories
@@ -16,32 +18,80 @@ namespace Keepr.Server.Repositories
 
     internal List<Keep> GetAll()
     {
-      throw new NotImplementedException();
+      string sql = @"
+      SELECT
+      k.*,
+      a.*
+      FROM keeps k
+      JOIN accounts a ON a.id = k.creatorId;";
+      return _db.Query<Keep, Profile, Keep>(sql,(k,p)=>{
+        k.Creator = p;
+        return k;
+      },splitOn: "id").ToList();
     }
 
     internal Keep GetById(int id)
     {
-      throw new NotImplementedException();
+      string sql = @"
+      SELECT
+      k.*,
+      a.*
+      FROM keeps k
+      JOIN accounts a ON a.id = k.creatorId
+      WHERE id = @id;";
+      return _db.Query<Keep, Profile, Keep>(sql, (k,p)=>{
+      k.Creator = p;
+      return k;
+      },new {id}).FirstOrDefault();
     }
 
     internal List<Keep> GetKeepsByProfileId(string id)
     {
-      throw new NotImplementedException();
+      string sql = @"
+      SELECT
+      k.*,
+      a.*
+      FROM keeps k
+      JOIN accounts a ON a.id = k.creatorId
+      WHERE k.creatorId = @id;";
+      return _db.Query<Keep, Profile, Keep>(sql,(k,p)=>{
+        k.Creator = p;
+        return k;
+      },new {id}).ToList();
     }
 
     internal Keep Create(Keep k)
     {
-      throw new NotImplementedException();
+      string sql = @"
+      INSERT INTO 
+      keeps(name,description, img, creatorId)
+      VALUES(@Name,@Description, @Img, @CreatorId);
+      SELECT LAST_INSERT_ID();";
+      k.Id = _db.ExecuteScalar<int>(sql, k);
+      return k;
     }
 
-    internal bool Edit(Keep original)
+    internal Keep Edit(Keep original)
     {
-      throw new NotImplementedException();
+      string sql =@"
+      UPDATE keeps
+      SET
+      name = @Name,
+      description=@Description,
+      img=@Img,
+      creatorId=@CreatorId,
+      views=@Views,
+      shares=@Shares,
+      keeps=@Keeps
+      WHERE id = @Id;";
+      _db.Execute(sql, original);
+      return original;
     }
 
-    internal bool Delete(int id)
+    internal void Delete(int id)
     {
-      throw new NotImplementedException();
+      string sql = "DELETE FROM keeps WHERE id = @id LIMIT 1;";
+      _db.Execute(sql, new{id});
     }
   }
 }
