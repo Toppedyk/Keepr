@@ -56,13 +56,30 @@ namespace Keepr.Server.Controllers
 
 
         [HttpGet("{id}/vaults")]
-        public async Task<ActionResult<List<Vault>>> GetVaultsByProfileId(string id)
+        public async Task<ActionResult<List<Vault>>> GetVaultByProfileId(string id)
         {
             try
             {
                 Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-                List<Vault> vaults = _vaultsService.GetVaultsByProfileId(id, userInfo.Id);
+
+                //Private
+                if(userInfo!=null){
+                //if owner return all
+                if(id == userInfo.Id)
+                {
+                List<Vault> vaults = _vaultsService.GetVaultsByAccountId(id);
                 return Ok(vaults);
+                }
+                // if others, return public vaults
+                List<Vault> pubvaults = _vaultsService.GetVaultsByProfileId(id);
+                return Ok(pubvaults);
+                }
+
+                if(userInfo==null){
+                List<Vault> vaults = _vaultsService.GetVaultsByProfileId(id);
+                return Ok(vaults);
+                }
+                return BadRequest("That is Private");
             }
             catch (Exception e)
             {

@@ -48,7 +48,7 @@ namespace Keepr.Server.Repositories
     internal List<Vault> GetVaultsByAccountId(string userInfoId)
     {
       string sql = @"
-        SELECT 
+      SELECT 
       v.*, 
       a.*
       FROM vaults v

@@ -36,11 +36,13 @@ namespace Keepr.Server.Services
       return _repoVK.GetVaultKeeps(id);
     }
 
-    internal List<Vault> GetVaultsByProfileId(string id, string userInfoId)
+    internal List<Vault> GetVaultsByAccountId(string id)
     {
-      if(id == userInfoId){
-        return _repo.GetVaultsByAccountId(userInfoId);
-      }
+      return _repo.GetVaultsByAccountId(id);
+    }
+
+    internal List<Vault> GetVaultsByProfileId(string id)
+    {
       return _repo.GetVaultsByProfileId(id);
     }
 
@@ -72,32 +74,6 @@ namespace Keepr.Server.Services
       }
       _repo.Delete(id);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   }
