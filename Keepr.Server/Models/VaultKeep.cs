@@ -18,4 +18,16 @@ namespace Keepr.Server.Models
         public string CreatorId { get; set; }
     }
 
+    public class VaultKeepViewModel : Keep
+    {
+        public int VaultKeepId { get; set; }
+
+        [Required]
+        public int VaultId { get; set; }
+
+        [Required]
+        public int KeepId { get; set; }
+        
+    }
+
 }

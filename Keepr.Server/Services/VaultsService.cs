@@ -31,7 +31,7 @@ namespace Keepr.Server.Services
       return vault;
     }
 
-    internal List<VaultKeep> GetVaultKeeps(int id)
+    internal List<VaultKeepViewModel> GetVaultKeeps(int id)
     {
       return _repoVK.GetVaultKeeps(id);
     }

@@ -49,11 +49,11 @@ namespace Keepr.Server.Controllers
         }
 
         [HttpGet("{id}/keeps")]
-        public ActionResult<List<Vault>> GetVaultKeeps(int id)
+        public ActionResult<List<VaultKeepViewModel>> GetVaultKeeps(int id)
         {
             try
             {
-                List<VaultKeep> keeps = _service.GetVaultKeeps(id);
+                List<VaultKeepViewModel> keeps = _service.GetVaultKeeps(id);
                 return Ok(keeps);
             }
             catch (Exception e)
@@ -88,6 +88,7 @@ namespace Keepr.Server.Controllers
             {
                 Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
                 v.Id = id;
+                // v.CreatorId = userInfo.Id;
                 Vault newV = _service.Edit(v, userInfo.Id);
                 newV.Creator = userInfo;
                 return Ok(newV); 

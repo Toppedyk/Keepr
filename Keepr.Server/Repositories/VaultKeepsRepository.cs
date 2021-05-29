@@ -16,23 +16,23 @@ namespace Keepr.Server.Repositories
             _db = db;
         }
 
-    internal List<VaultKeep> GetVaultKeeps(int id)
+    internal List<VaultKeepViewModel> GetVaultKeeps(int id)
     {
       //id=vaultId
       string sql = @"
       SELECT 
       k.*,
       v.name,
-      vk.id AS id,
+      vk.id AS vaultKeepId,
       vk.keepId AS keepId,
       vk.VaultId AS vaultId,
       vk.creatorId as creatorId
       FROM 
       vault_keeps vk
       JOIN keeps k ON k.id = vk.keepId
-      JOIN vaults v ON vk.vaultId = id
+      JOIN vaults v ON vk.vaultId = v.id
       WHERE vk.vaultId = @id;";
-      return _db.Query<VaultKeep>(sql, new{id}).ToList();
+      return _db.Query<VaultKeepViewModel>(sql, new{id}).ToList();
     }
 
     internal VaultKeep Create(VaultKeep vk)

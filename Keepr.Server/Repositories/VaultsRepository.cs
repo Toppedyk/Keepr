@@ -63,7 +63,7 @@ namespace Keepr.Server.Repositories
     {
       string sql = @"
       SELECT 
-      v.*, 
+      v.*,
       a.*
       FROM vaults v
       JOIN accounts a ON a.id = v.creatorId
