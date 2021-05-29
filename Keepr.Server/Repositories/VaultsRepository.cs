@@ -38,11 +38,11 @@ namespace Keepr.Server.Repositories
       a.*
       FROM vaults v
       JOIN accounts a ON a.id = v.creatorId
-      WHERE v.id = @id AND isPrivate = false;";
+      WHERE v.creatorId = @id AND isPrivate = 0;";
       return _db.Query<Vault, Profile, Vault>(sql, (v,p)=>{
         v.Creator = p;
         return v;
-      }, splitOn:"id").ToList();
+      }, new{id}).ToList();
     }
 
     internal List<Vault> GetVaultsByAccountId(string userInfoId)
@@ -53,7 +53,7 @@ namespace Keepr.Server.Repositories
       a.*
       FROM vaults v
       JOIN accounts a ON a.id = v.creatorId
-      WHERE v.id = @userInfoId;";
+      WHERE v.creatorId = @userInfoId;";
       return _db.Query<Vault, Profile, Vault>(sql, (v,p)=>{
         v.Creator = p;
         return v;

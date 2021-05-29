@@ -35,11 +35,21 @@ namespace Keepr.Server.Controllers
         // }
 
         [HttpGet("{id}")]
-        public ActionResult<Vault> GetById(int id)
+        public async Task<ActionResult<Vault>> GetById(int id)
         {
             try
             {
+                Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
                 Vault vault = _service.GetById(id);
+                if(userInfo == null && vault.IsPrivate == true){
+                    throw new Exception("This is private;");
+                }
+                if(vault.IsPrivate == true){
+                    if(userInfo.Id == vault.CreatorId){
+                        return vault;
+                    }
+                    throw new Exception("This is private;");
+                }
                 return Ok(vault);
             }
             catch (Exception e)
