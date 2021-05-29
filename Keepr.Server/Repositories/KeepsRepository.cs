@@ -38,7 +38,7 @@ namespace Keepr.Server.Repositories
       a.*
       FROM keeps k
       JOIN accounts a ON a.id = k.creatorId
-      WHERE id = @id;";
+      WHERE k.id = @id;";
       return _db.Query<Keep, Profile, Keep>(sql, (k,p)=>{
       k.Creator = p;
       return k;

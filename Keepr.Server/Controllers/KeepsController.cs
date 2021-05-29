@@ -58,12 +58,11 @@ namespace Keepr.Server.Controllers
             try
             {
                 Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-                Account fullAccount = _serviceAccount.GetOrCreateProfile(userInfo);
                 k.CreatorId = userInfo.Id;
 
                 
                 Keep newK = _service.Create(k);
-                newK.Creator = fullAccount;
+                newK.Creator = userInfo;
                 return Ok(newK);
             }
             catch (Exception e)

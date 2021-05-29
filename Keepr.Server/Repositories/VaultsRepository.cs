@@ -79,7 +79,7 @@ namespace Keepr.Server.Repositories
       string sql = @"
       INSERT INTO
       vaults(name, description, imgUrl, isPrivate, creatorId)
-      VALUES(@Name, @Description, @ImgUrl, @IsPrivate. @CreatorId);
+      VALUES(@Name, @Description, @ImgUrl, @IsPrivate, @CreatorId);
       SELECT LAST_INSERT_ID();";
       v.Id = _db.ExecuteScalar<int>(sql, v);
       return v;

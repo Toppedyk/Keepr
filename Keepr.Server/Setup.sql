@@ -48,7 +48,8 @@ CREATE TABLE IF NOT EXISTS vault_keeps(
   FOREIGN KEY (keepId) REFERENCES keeps(id) ON DELETE CASCADE
 )default charset utf8 COMMENT '';
 
-      INSERT INTO 
-      keeps(name,description, img, creatorId, views, shares, keeps)
-      VALUES("Taylors test","Testing 123", "//Placehold.it/50x50", "0892da1c-92f2-418a-a93a-efda0b8dccaf", 0, 0,0);
+ DROP TABLE vault_keeps;
+ DROP TABLE vaults;
+ DROP TABLE keeps;
+
 

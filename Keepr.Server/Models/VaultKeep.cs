@@ -15,7 +15,6 @@ namespace Keepr.Server.Models
         [Required]
         public int KeepId { get; set; }
 
-        [Required]
         public string CreatorId { get; set; }
     }
 
