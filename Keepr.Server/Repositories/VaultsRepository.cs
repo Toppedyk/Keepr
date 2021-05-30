@@ -61,6 +61,7 @@ namespace Keepr.Server.Repositories
     }
     internal Vault GetById(int id)
     {
+      // GO
       string sql = @"
       SELECT 
       v.*,
@@ -93,7 +94,7 @@ namespace Keepr.Server.Repositories
         name=@Name,
         description = @ Description,
         imgUrl = @ImgUrl,
-        isPrivate = IsPrivate,
+        isPrivate = @IsPrivate,
         creatorId = @CreatorId
         WHERE id = @Id;";
         _db.Execute(sql, original);

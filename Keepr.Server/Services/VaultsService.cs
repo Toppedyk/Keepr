@@ -53,7 +53,7 @@ namespace Keepr.Server.Services
 
     internal Vault Edit(Vault v, string id)
     {
-      Vault original = GetById(v.Id);
+      Vault original = _repo.GetById(v.Id);
       if(original.CreatorId != id){
         throw new Exception("You cannot edit this");
       }
@@ -61,6 +61,7 @@ namespace Keepr.Server.Services
       original.Description= v.Description.Length > 0 ? v.Description : original.Description;
       original.ImgUrl= v.ImgUrl.Length > 0 ? v.ImgUrl : original.ImgUrl;
       original.IsPrivate= v.IsPrivate != v.IsPrivate ? v.IsPrivate : original.IsPrivate;
+      // original.Creator = null;
       return _repo.Edit(original);
     }
     
