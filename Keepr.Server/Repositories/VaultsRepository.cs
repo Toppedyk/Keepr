@@ -86,19 +86,20 @@ namespace Keepr.Server.Repositories
       return v;
     }
 
-    internal Vault Edit(Vault original)
+    internal Vault Edit(Vault v)
     {
       string sql = @"
       UPDATE vaults
       SET
         name=@Name,
-        description = @ Description,
+        description = @Description,
         imgUrl = @ImgUrl,
         isPrivate = @IsPrivate,
         creatorId = @CreatorId
+        
         WHERE id = @Id;";
-        _db.Execute(sql, original);
-        return original;
+        _db.Execute(sql, v);
+        return v;
     }
 
     internal void Delete(int id)
