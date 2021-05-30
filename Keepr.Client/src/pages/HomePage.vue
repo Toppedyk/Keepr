@@ -1,8 +1,8 @@
 <template>
   <div class="container-fluid">
-    <div class="row">
-      <div class="col">
-        <div class="card-columns">
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div class="card-columns mt-3">
           <Keep v-for="keep in state.keeps" :key="keep.id" :keep="keep" />
         </div>
       </div>
@@ -39,4 +39,17 @@ export default {
     .card-columns {
         column-count: 4;
     }
+@media(max-width: 900px){
+      .card-columns {
+        column-count: 3;
+    }
+
+}
+
+@media(max-width: 574px){
+      .card-columns {
+        column-count: 2;
+    }
+
+}
 </style>
