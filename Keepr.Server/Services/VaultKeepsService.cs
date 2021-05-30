@@ -6,7 +6,7 @@ namespace Keepr.Server.Services
 {
     public class VaultKeepsService
     {
-        private readonly VaultKeepsRepository _repo;
+    private readonly VaultKeepsRepository _repo;
     private readonly KeepsRepository _repoKeep;
 
     public VaultKeepsService(VaultKeepsRepository vks, KeepsRepository ks)
@@ -17,19 +17,24 @@ namespace Keepr.Server.Services
 
     internal VaultKeep Create(VaultKeep vk)
     {
-      //Add to total keeps
-    return _repo.Create(vk);
+      Keep keep = _repoKeep.GetById(vk.KeepId);
+      keep.Keeps++;
+      _repoKeep.Edit(keep);
+      return _repo.Create(vk);
     }
 
     internal void Delete(int id, string creatorId)
     {
-      Keep keep = _repoKeep.GetById(id);
+      VaultKeepViewModel vk = _repo.GetById(id);
+      Keep keep = _repoKeep.GetById(vk.Id);
       if(keep.CreatorId != creatorId)
       {
         throw new Exception("You cannot delete this");
       }
-      //subtract from total keeps
+      keep.Keeps--;
+      _repoKeep.Edit(keep);
       _repo.Delete(id);
+
     }
   }
 }
