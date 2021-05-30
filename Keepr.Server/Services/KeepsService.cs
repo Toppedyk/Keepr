@@ -26,6 +26,8 @@ namespace Keepr.Server.Services
       {
         throw new Exception("Invalid ID");
       }
+      keep.Views++;
+      keep = _repo.Edit(keep);
       return keep;
     }
 
