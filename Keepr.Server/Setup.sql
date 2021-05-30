@@ -48,6 +48,7 @@ CREATE TABLE IF NOT EXISTS vault_keeps(
   FOREIGN KEY (keepId) REFERENCES keeps(id) ON DELETE CASCADE
 )default charset utf8 COMMENT '';
 
+
  DROP TABLE vault_keeps;
  DROP TABLE vaults;
  DROP TABLE keeps;

@@ -1,15 +1,12 @@
 <template>
-  <div class="Keep col-3">
-    <div class="card d-flex" :style="{ backgroundImage: `url(${keep.img})` }">
-      <!-- <img :src="keep.img" class="card-img-top" alt="..."> -->
-      <div class="card-body">
-        <h5 class="card-title">
-          Card title
-        </h5>
-        <p class="card-text">
-          Some quick example text to build on the card title and make up the bulk of the card's content.
-        </p>
-      </div>
+  <div class="Keep card" :style="{ backgroundImage: `url(${keep.img})` }">
+    <div class="card-body">
+      <h5 class="card-title">
+        Card title
+      </h5>
+      <p class="card-text">
+        {{ keep.description }}
+      </p>
     </div>
   </div>
 </template>
@@ -33,7 +30,9 @@ export default {
 <style lang="scss" scoped>
 
 .card{
-background-size: contain;
+background-size: cover;
+background-repeat: no-repeat;
+min-height: 30vh;
 }
 
 </style>
