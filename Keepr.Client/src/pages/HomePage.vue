@@ -36,5 +36,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+    .card-columns {
+        column-count: 4;
+    }
 </style>

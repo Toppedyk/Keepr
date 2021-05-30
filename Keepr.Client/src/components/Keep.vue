@@ -1,13 +1,9 @@
 <template>
-  <div class="Keep card" :style="{ backgroundImage: `url(${keep.img})` }">
-    <div class="card-body">
-      <h5 class="card-title">
-        Card title
-      </h5>
-      <p class="card-text">
-        {{ keep.description }}
-      </p>
-    </div>
+  <div class="Keep card">
+    <img :src="keep.img" alt="keep image" class="img-fluid w-100 image">
+    <h5 class="card-title keep-name">
+      {{ keep.name }}
+    </h5>
   </div>
 </template>
 
@@ -29,10 +25,15 @@ export default {
 
 <style lang="scss" scoped>
 
-.card{
-background-size: cover;
-background-repeat: no-repeat;
-min-height: 30vh;
+.image{
+  position: relative;
 }
-
+.keep-name{
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+  font-weight: bold;
+  color: white;
+  // -webkit-text-stroke: .1px white;
+}
 </style>
