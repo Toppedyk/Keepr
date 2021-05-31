@@ -4,19 +4,19 @@ class VaultsService {
 
   }
 
-  async getVaultsByProfileId() {
+  async getVaultsByProfileId(id) {
 
   }
 
-  async create() {
+  async create(newVault) {
 
   }
 
-  async edit() {
+  async edit(vault) {
 
   }
 
-  async delete() {
+  async delete(id) {
 
   }
 }

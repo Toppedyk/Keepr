@@ -7,12 +7,14 @@ class KeepsService {
     AppState.keeps = res.data.reverse()
   }
 
-  async getKeepsByProfileId() {
-
+  async getKeepsByProfileId(id) {
+    const res = await api.get(`api/profiles/${id}/keeps`)
+    AppState.keeps = res.data.reverse()
   }
 
-  getKeepsByVaultId(id) {
-
+  async getKeepsByVaultId(id) {
+    const res = await api.get(`api/vaults/${id}/keeps`)
+    AppState.keeps = res.data.reverse()
   }
 
   async getKeep(id) {
@@ -20,16 +22,19 @@ class KeepsService {
     AppState.activeKeep = res.data
   }
 
-  async create() {
-
+  async create(keep) {
+    await api.post('api/keeps', keep)
+    await this.getKeepsByProfileId(keep.creatorId)
   }
 
-  async delete() {
-
+  async delete(id, profileId) {
+    await api.delete(`api/keeps/${id}`)
+    await this.getKeepsByProfileId(profileId)
   }
 
-  async edit() {
-
+  async edit(keep) {
+    await api.put(`api/keeps/${keep.id}`, keep)
+    await this.getKeepsByProfileId(keep.creatorId)
   }
 }
 export const keepsService = new KeepsService()
