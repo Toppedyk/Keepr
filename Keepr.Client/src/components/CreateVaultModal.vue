@@ -24,6 +24,10 @@
               <label for="vault image">Image Url</label>
               <input type="text" class="form-control" id="imgUrl" v-model="state.newVault.imgUrl">
             </div>
+            <label>
+              <input type="checkbox" v-model="state.newVault.isPrivate" />
+              Private
+            </label>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">
                 Close
