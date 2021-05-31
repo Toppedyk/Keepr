@@ -1,5 +1,5 @@
 <template>
-  <div class="modal fade" id="createVault" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal" id="createVault" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -23,15 +23,6 @@
             <div class="form-group">
               <label for="vault image">Image Url</label>
               <input type="text" class="form-control" id="imgUrl" v-model="state.newVault.imgUrl">
-            </div>
-            <div class="form-group">
-              <label for="vault image">Private</label>
-              <input
-                type="checkbox"
-                v-model="state.newVault.isPrivate"
-                true-value="true"
-                false-value="false"
-              >
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">
