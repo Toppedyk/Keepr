@@ -1,6 +1,5 @@
 <template>
-  <div class="KeepDetailsModal">
-  </div>
+  <div></div>
 </template>
 
 <script>

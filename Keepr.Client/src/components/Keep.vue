@@ -1,6 +1,9 @@
 <template>
   <div class="Keep card rounded shadow">
-    <img :src="keep.img" alt="keep image" class="img-fluid w-100 image rounded">
+    <img :src="keep.img"
+         alt="keep image"
+         class="img-fluid w-100 image rounded"
+    >
     <div class="card-title info">
       <h4 class="keep-name mr-4">
         {{ keep.name }}
@@ -22,7 +25,8 @@ export default {
     }
   },
   setup() {
-    return {}
+    return {
+    }
   },
   components: {}
 }
