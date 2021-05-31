@@ -3,6 +3,9 @@
     <img :src="keep.img"
          alt="keep image"
          class="img-fluid w-100 image rounded"
+         data-toggle="modal"
+         data-target="#exampleModal"
+         @click="getKeep"
     >
     <div class="card-title info">
       <h4 class="keep-name mr-4">
@@ -12,10 +15,13 @@
         <img :src="keep.creator.picture" alt="profile picture" class="rounded-circle small-img">
       </router-link>
     </div>
+    <KeepDetailsModal :keep="keep" />
   </div>
 </template>
 
 <script>
+import { keepsService } from '../services/KeepsService'
+import Notification from '../utils/Notification'
 export default {
   name: 'Keep',
   props: {
@@ -24,8 +30,15 @@ export default {
       required: true
     }
   },
-  setup() {
+  setup(props) {
     return {
+      async getKeep() {
+        try {
+          await keepsService.getKeep(props.keep.id)
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      }
     }
   },
   components: {}
