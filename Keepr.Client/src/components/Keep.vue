@@ -47,7 +47,7 @@ export default {
 
 <style lang="scss" scoped>
 .card{
-min-width: 20vw;
+max-width: 20vw;
 }
 
 .image{

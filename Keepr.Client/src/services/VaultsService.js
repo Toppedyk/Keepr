@@ -9,7 +9,7 @@ class VaultsService {
 
   async getVaultsByProfileId(id) {
     const res = await api.get(`api/profiles/${id}/vaults`)
-    AppState.vaults = res.data
+    AppState.vaults = res.data.reverse()
   }
 
   async create(newVault) {
