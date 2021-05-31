@@ -27,6 +27,16 @@ class KeepsService {
     await this.getKeepsByProfileId(keep.creatorId)
   }
 
+  async addVaultKeep(vaultKeep) {
+    const res = await api.post('api/vaultkeeps', vaultKeep)
+    await this.getKeepsByVaultId(res.data.vaultId)
+  }
+
+  async removeVaultKeep(vaultKeep) {
+    await api.delete(`api/vaultKeeps/${vaultKeep.id}`)
+    await this.getKeepsByVaultId(vaultKeep.vaultId)
+  }
+
   async delete(id, profileId) {
     await api.delete(`api/keeps/${id}`)
     await this.getKeepsByProfileId(profileId)
