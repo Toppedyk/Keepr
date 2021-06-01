@@ -57,7 +57,7 @@ namespace Keepr.Server.Repositories
       return _db.Query<Vault, Profile, Vault>(sql, (v,p)=>{
         v.Creator = p;
         return v;
-      }, splitOn:"id").ToList();
+      }, new{userInfoId}).ToList();
     }
     internal Vault GetById(int id)
     {

@@ -5,6 +5,9 @@
       <h5 class="card-title">
         {{ vault.name }}
       </h5>
+      <p v-if="vault.isPrivate ==true">
+        PRIVATE
+      </p>
     </div>
   </div>
 </template>

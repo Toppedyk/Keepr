@@ -65,21 +65,22 @@ namespace Keepr.Server.Controllers
                 //Private
                 if(userInfo!=null){
                 //if owner return all
-                if(id == userInfo.Id)
+                    if(id == userInfo.Id)
+                    {
+                    List<Vault> vaults = _vaultsService.GetVaultsByAccountId(id);
+                    return Ok(vaults);
+                    }else{
+                    List<Vault> pubvaults = _vaultsService.GetVaultsByProfileId(id);
+                    return Ok(pubvaults);
+                    }
+                }
+                else if(userInfo==null)
                 {
-                List<Vault> vaults = _vaultsService.GetVaultsByAccountId(id);
-                return Ok(vaults);
-                }
-                // if others, return public vaults
-                List<Vault> pubvaults = _vaultsService.GetVaultsByProfileId(id);
-                return Ok(pubvaults);
-                }
-
-                if(userInfo==null){
                 List<Vault> vaults = _vaultsService.GetVaultsByProfileId(id);
                 return Ok(vaults);
-                }
+                }else{
                 return BadRequest("That is Private");
+                }
             }
             catch (Exception e)
             {
