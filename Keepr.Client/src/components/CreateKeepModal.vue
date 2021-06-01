@@ -14,15 +14,15 @@
           <form @submit.prevent="createKeep">
             <div class="form-group">
               <label for="Keep name">Name</label>
-              <input type="text" class="form-control" id="name" v-model="state.newKeep.name" required>
+              <input type="text" class="form-control" id="keep name" v-model="state.newKeep.name" required>
             </div>
             <div class="form-group">
               <label for="Keep description">Description</label>
-              <input type="text" class="form-control" id="description" v-model="state.newKeep.description">
+              <input type="text" class="form-control" id="keep description" v-model="state.newKeep.description">
             </div>
             <div class="form-group">
               <label for="Keep image">Image Url</label>
-              <input type="text" class="form-control" id="imgUrl" v-model="state.newKeep.img">
+              <input type="text" class="form-control" id="keep imgUrl" v-model="state.newKeep.img">
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">

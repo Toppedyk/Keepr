@@ -81,7 +81,6 @@ import { AppState } from '../AppState'
 import { keepsService } from '../services/KeepsService'
 import Notification from '../utils/Notification'
 import { useRouter } from 'vue-router'
-import { vaultsService } from '../services/VaultsService'
 import $ from 'jquery'
 import Swal from 'sweetalert2'
 export default {
@@ -99,11 +98,9 @@ export default {
       async addVaultKeep() {
         try {
           state.newVaultKeep.keepId = state.keep.id
-          await vaultsService.getById(state.newVaultKeep.vaultId)
           await keepsService.addVaultKeep(state.newVaultKeep)
-          $('#keepDetails').modal('toggle')
-          Notification.toast('Successfully Created', 'success')
-          router.push({ name: 'VaultDetailsPage', params: { id: state.newVaultKeep.vaultId } })
+          $('#keepDetails').modal('hide')
+          Notification.toast('Successfully Added', 'success')
           state.newVaultKeep = {}
         } catch (error) {
           Notification.toast('Error: ' + error, 'warning')

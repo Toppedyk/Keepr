@@ -14,18 +14,18 @@
           <form @submit.prevent="createVault">
             <div class="form-group">
               <label for="vault name">Name</label>
-              <input type="text" class="form-control" id="name" v-model="state.newVault.name" required>
+              <input type="text" class="form-control" id="vault name" v-model="state.newVault.name" required>
             </div>
             <div class="form-group">
               <label for="vault description">Description</label>
-              <input type="text" class="form-control" id="description" v-model="state.newVault.description">
+              <input type="text" class="form-control" id="vault description" v-model="state.newVault.description">
             </div>
             <div class="form-group">
               <label for="vault image">Image Url</label>
-              <input type="text" class="form-control" id="imgUrl" v-model="state.newVault.imgUrl">
+              <input type="text" class="form-control" id="vault imgUrl" v-model="state.newVault.imgUrl">
             </div>
             <label>
-              <input type="checkbox" v-model="state.newVault.isPrivate" />
+              <input type="checkbox" id="vault privacy" v-model="state.newVault.isPrivate" />
               Private
             </label>
             <div class="modal-footer">
@@ -48,6 +48,7 @@ import { computed, reactive } from 'vue'
 import { vaultsService } from '../services/VaultsService'
 import { AppState } from '../AppState'
 import Notification from '../utils/Notification'
+import $ from 'jquery'
 export default {
   name: 'CreateVaultModal',
   setup() {
@@ -60,6 +61,7 @@ export default {
       async createVault() {
         state.newVault.creatorId = state.account.id
         await vaultsService.create(state.newVault)
+        $('#createVault').modal('hide')
         Notification.toast('Successfully created', 'success')
         state.newVault = {}
       }

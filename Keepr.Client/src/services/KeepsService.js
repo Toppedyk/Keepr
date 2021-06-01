@@ -35,8 +35,7 @@ class KeepsService {
   }
 
   async addVaultKeep(vaultKeep) {
-    const res = await api.post('api/vaultkeeps', vaultKeep)
-    await this.getKeepsByVaultId(res.data.vaultId)
+    await api.post('api/vaultkeeps', vaultKeep)
   }
 
   async removeVaultKeep(vaultKeepId) {
