@@ -8,23 +8,65 @@
   >
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            {{ state.keep.name }}
-          </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p></p>
+        <div class="row">
+          <div class="col-6">
+            Image Here
+          </div>
+          <div class="col-6">
+            <div class="row">
+              <div class="col">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </div>
+            <div class="row ">
+              <div class="col d-flex justify-content-center align-items-baseline">
+                <i class="fas fa-eye"></i><span class="ml-2 mr-4 number-details">{{ state.keep.views }}</span>
+                <i class="fab fa-kaggle"></i><span class="ml-2 mr-4 number-details">{{ state.keep.keeps }}</span>
+                <i class="fas fa-share-alt"></i><span class="ml-2 mr-4 number-details">{{ state.keep.shares }}</span>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col d-flex justify-content-center">
+                <h2>{{ state.keep.name }}</h2>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col d-flex justify-content-center mt-4">
+                <p>{{ state.keep.description }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col d-flex justify-content-center mt-4">
+                <form @submit.prevent="addVaultKeep">
+                  <div class="dropdown" v-if="state.accountVaults.length === 0">
+                    <label class="mr-1">Add to Vault</label>
+                    <select class="form-select" aria-labelledby="dropdownMenuButton" style="border: 1px gray solid;" v-model="state.newVaultKeep.vaultId" required>
+                      <option>
+                        No vaults created
+                      </option>
+                    </select>
+                  </div>
+                  <div class="dropdown" v-else>
+                    <label class="mr-1">Add to Vault</label>
+                    <select class="form-select" aria-labelledby="dropdownMenuButton" style="border: 1px gray solid;" v-model="state.newVaultKeep.vaultId" required>
+                      <option v-for="vault in state.accountVaults" :key="vault.id" :value="vault.id">
+                        {{ vault.name }}
+                      </option>
+                    </select>
+                    <button type="submit" class="btn btn-success btn-sm" v-if="state.accountVaults.length > 0">
+                      <i class="fas fa-plus-circle ml-3"></i>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">
             Close
-          </button>
-          <button type="button" class="btn btn-primary">
-            Save changes
           </button>
         </div>
       </div>
@@ -35,18 +77,42 @@
 <script>
 import { computed, reactive } from 'vue'
 import { AppState } from '../AppState'
+import { keepsService } from '../services/KeepsService'
+import Notification from '../utils/Notification'
+import { useRouter } from 'vue-router'
+import { vaultsService } from '../services/VaultsService'
 export default {
   name: 'KeepDetailsModal',
   setup() {
+    const router = useRouter()
     const state = reactive({
-      keep: computed(() => AppState.activeKeep)
+      keep: computed(() => AppState.activeKeep),
+      accountVaults: computed(() => AppState.vaults),
+      newVaultKeep: {}
     })
-    return { state }
+    return {
+      state,
+      router,
+      async addVaultKeep() {
+        try {
+          state.newVaultKeep.keepId = state.keep.id
+          await vaultsService.getById(state.newVaultKeep.vaultId)
+          await keepsService.addVaultKeep(state.newVaultKeep)
+          Notification.toast('Successfully Created', 'success')
+          router.push({ name: 'VaultDetailsPage', params: { id: state.newVaultKeep.vaultId } })
+          state.newVaultKeep = {}
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'warning')
+        }
+      }
+    }
   },
   components: {}
 }
 </script>
 
 <style lang="scss" scoped>
-
+.number-details{
+  font-weight: bold;
+}
 </style>

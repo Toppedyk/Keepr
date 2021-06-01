@@ -16,16 +16,20 @@ import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
 // import { vaultsService } from '../services/VaultsService'
 import { useRoute } from 'vue-router'
+import { keepsService } from '../services/KeepsService'
+import Notification from '../utils/Notification'
 export default {
   name: 'VaultDetailsPage',
   setup() {
     const route = useRoute()
     const state = reactive({
       vault: computed(() => AppState.activeVault),
+      keeps: computed(() => AppState.keeps),
       loading: true
     })
     onMounted(async() => {
       try {
+        await keepsService.getKeepsByVaultId(route.params.id)
         state.loading = false
       } catch (error) {
         Notification.toast('Error: ' + error, 'error')
