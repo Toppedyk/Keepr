@@ -25,6 +25,8 @@ namespace Keepr.Server.Controllers
         {
             try
             {
+                // VaultKeepViewModel keep = _service.GetById(id);
+
                 Keep keep = _service.GetById(id);
                 return Ok(keep);
             }
