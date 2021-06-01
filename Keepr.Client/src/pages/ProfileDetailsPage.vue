@@ -27,6 +27,9 @@
     <div class="row">
       <div class="col">
         <h3>Keeps</h3>
+        <button type="button" class="btn btn-success ml-3" data-toggle="modal" data-target="#CreateKeepModal">
+          Add Keep
+        </button>
       </div>
     </div>
     <div class="row justify-content-center">
@@ -36,6 +39,7 @@
         </div>
       </div>
     </div>
+    <CreateKeepModal />
     <CreateVaultModal />
   </div>
 </template>
