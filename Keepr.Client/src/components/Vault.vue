@@ -1,7 +1,7 @@
 <template>
-  <div class="card col-3" @click="getVault">
-    <img :src="vault.imgUrl" class="card-img-top img-fluid w-100" alt="...">
-    <div class="card-body">
+  <div class="card col-3">
+    <div class="card-body" @click="getVault">
+      <img :src="vault.imgUrl" class="card-img-top img-fluid w-100" alt="...">
       <h5 class="card-title">
         {{ vault.name }}
       </h5>
@@ -9,12 +9,19 @@
         PRIVATE
       </p>
     </div>
+    <div>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="deleteVault">
+        Delete
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
+import { computed, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { vaultsService } from '../services/VaultsService'
+import { AppState } from '../AppState'
 export default {
   name: 'Vault',
   props: {
@@ -25,11 +32,23 @@ export default {
   },
   setup(props) {
     const router = useRouter()
+    const state = reactive({
+      account: computed(() => AppState.account)
+    })
     return {
       router,
+      state,
       async getVault() {
         await vaultsService.getById(props.vault.id)
         router.push({ name: 'VaultDetailsPage', params: { id: props.vault.id } })
+      },
+      async deleteVault() {
+        try {
+          await vaultsService.delete(props.vault.id)
+          await vaultsService.getVaultsByProfileId(state.account.id)
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
       }
     }
   },
