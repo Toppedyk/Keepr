@@ -25,6 +25,7 @@ export default {
       keeps: computed(() => AppState.keeps),
       loading: true
     })
+
     onMounted(async() => {
       try {
         await keepsService.getAll()

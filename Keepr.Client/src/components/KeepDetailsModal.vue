@@ -1,5 +1,5 @@
 <template>
-  <div class="modal fade "
+  <div class="modal"
        id="keepDetails"
        tabindex="-1"
        aria-labelledby="exampleModalLabel"
@@ -10,7 +10,7 @@
       <div class="modal-content">
         <div class="row">
           <div class="col-6">
-            Image Here
+            <img :src="state.keep.img" alt="keep image" class="img-fluid w-100">
           </div>
           <div class="col-6">
             <div class="row">
@@ -37,37 +37,38 @@
                 <p>{{ state.keep.description }}</p>
               </div>
             </div>
-            <div class="row">
-              <div class="col d-flex justify-content-center mt-4">
-                <form @submit.prevent="addVaultKeep">
-                  <div class="dropdown" v-if="state.accountVaults.length === 0">
-                    <label class="mr-1">Add to Vault</label>
-                    <select class="form-select" aria-labelledby="dropdownMenuButton" style="border: 1px gray solid;" v-model="state.newVaultKeep.vaultId" required>
-                      <option>
-                        No vaults created
-                      </option>
-                    </select>
-                  </div>
-                  <div class="dropdown" v-else>
-                    <label class="mr-1">Add to Vault</label>
-                    <select class="form-select" aria-labelledby="dropdownMenuButton" style="border: 1px gray solid;" v-model="state.newVaultKeep.vaultId" required>
-                      <option v-for="vault in state.accountVaults" :key="vault.id" :value="vault.id">
-                        {{ vault.name }}
-                      </option>
-                    </select>
-                    <button type="submit" class="btn btn-success btn-sm" v-if="state.accountVaults.length > 0">
-                      <i class="fas fa-plus-circle ml-3"></i>
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Close
+        <div class="modal-footer d-flex justify-content-between">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="deleteKeep">
+            Delete
           </button>
+          <form @submit.prevent="addVaultKeep">
+            <div class="dropdown" v-if="state.accountVaults.length === 0">
+              <label class="mr-1">Add to Vault</label>
+              <select class="form-select" aria-labelledby="dropdownMenuButton" style="border: 1px gray solid;" v-model="state.newVaultKeep.vaultId" required>
+                <option>
+                  No vaults created
+                </option>
+              </select>
+            </div>
+            <div class="dropdown" v-else>
+              <label class="mr-1">Add to Vault</label>
+              <select class="form-select"
+                      aria-labelledby="dropdownMenuButton"
+                      style="border: 1px gray solid;"
+                      v-model="state.newVaultKeep.vaultId"
+                      required
+              >
+                <option v-for="vault in state.accountVaults" :key="vault.id" :value="vault.id">
+                  {{ vault.name }}
+                </option>
+              </select>
+              <button type="submit" class="btn btn-success btn-sm" v-if="state.accountVaults.length > 0">
+                <i class="fas fa-plus-circle ml-3"></i>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -81,6 +82,7 @@ import { keepsService } from '../services/KeepsService'
 import Notification from '../utils/Notification'
 import { useRouter } from 'vue-router'
 import { vaultsService } from '../services/VaultsService'
+import $ from 'jquery'
 export default {
   name: 'KeepDetailsModal',
   setup() {
@@ -98,9 +100,19 @@ export default {
           state.newVaultKeep.keepId = state.keep.id
           await vaultsService.getById(state.newVaultKeep.vaultId)
           await keepsService.addVaultKeep(state.newVaultKeep)
+          $('#keepDetails').modal('toggle')
           Notification.toast('Successfully Created', 'success')
           router.push({ name: 'VaultDetailsPage', params: { id: state.newVaultKeep.vaultId } })
           state.newVaultKeep = {}
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'warning')
+        }
+      },
+      async deleteKeep() {
+        try {
+          await keepsService.delete(state.keep.id)
+          await keepsService.getAll()
+          Notification.toast('Successfully Deleted', 'success')
         } catch (error) {
           Notification.toast('Error: ' + error, 'warning')
         }

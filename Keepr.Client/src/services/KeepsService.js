@@ -37,14 +37,14 @@ class KeepsService {
     await this.getKeepsByVaultId(vaultKeep.vaultId)
   }
 
-  async delete(id, profileId) {
+  async delete(id) {
     await api.delete(`api/keeps/${id}`)
-    await this.getKeepsByProfileId(profileId)
+    await this.getAll
   }
 
   async edit(keep) {
     await api.put(`api/keeps/${keep.id}`, keep)
-    await this.getKeepsByProfileId(keep.creatorId)
+    await this.getAll
   }
 }
 export const keepsService = new KeepsService()
