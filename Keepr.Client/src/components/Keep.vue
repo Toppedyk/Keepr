@@ -3,8 +3,6 @@
     <img :src="keep.img"
          alt="keep image"
          class="img-fluid w-100 image rounded"
-         data-toggle="modal"
-         data-target="#exampleModal"
          @click="getKeep"
     >
     <div class="card-title info">

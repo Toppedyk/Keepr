@@ -45,12 +45,12 @@ class KeepsService {
 
   async delete(id) {
     await api.delete(`api/keeps/${id}`)
-    await this.getAll
+    this.getAll()
   }
 
   async edit(keep) {
     await api.put(`api/keeps/${keep.id}`, keep)
-    await this.getAll
+    this.getAll()
   }
 }
 export const keepsService = new KeepsService()

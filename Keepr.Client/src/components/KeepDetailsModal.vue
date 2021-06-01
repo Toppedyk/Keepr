@@ -83,6 +83,7 @@ import Notification from '../utils/Notification'
 import { useRouter } from 'vue-router'
 import { vaultsService } from '../services/VaultsService'
 import $ from 'jquery'
+import Swal from 'sweetalert2'
 export default {
   name: 'KeepDetailsModal',
   setup() {
@@ -110,9 +111,20 @@ export default {
       },
       async deleteKeep() {
         try {
-          await keepsService.delete(state.keep.id)
-          await keepsService.getAll()
-          Notification.toast('Successfully Deleted', 'success')
+          await Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              keepsService.delete(state.keep.id)
+              Notification.toast('Successfully Deleted', 'success')
+            }
+          })
         } catch (error) {
           Notification.toast('Error: ' + error, 'warning')
         }
