@@ -36,5 +36,15 @@ namespace Keepr.Server.Services
       _repo.Delete(id);
 
     }
+
+    internal VaultKeepViewModel GetById(int id)
+    {
+      VaultKeepViewModel keep = _repo.GetById(id);
+      if(keep == null)
+      {
+        throw new Exception("Invalid ID");
+      }
+      return keep;
+    }
   }
 }

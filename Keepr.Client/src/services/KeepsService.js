@@ -1,4 +1,5 @@
 import { AppState } from '../AppState'
+import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 
 class KeepsService {
@@ -17,6 +18,12 @@ class KeepsService {
     AppState.keeps = res.data.reverse()
   }
 
+  async getVaultKeep(id) {
+    const res = await api.get(`api/vaultkeeps/${id}`)
+    logger.log(res.data)
+    AppState.activeVaultKeep = res.data
+  }
+
   async getKeep(id) {
     const res = await api.get(`api/keeps/${id}`)
     AppState.activeKeep = res.data
@@ -32,9 +39,8 @@ class KeepsService {
     await this.getKeepsByVaultId(res.data.vaultId)
   }
 
-  async removeVaultKeep(vaultKeep) {
-    await api.delete(`api/vaultKeeps/${vaultKeep.id}`)
-    await this.getKeepsByVaultId(vaultKeep.vaultId)
+  async removeVaultKeep(vaultKeepId) {
+    await api.delete(`api/vaultkeeps/${vaultKeepId}`)
   }
 
   async delete(id) {

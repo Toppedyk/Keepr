@@ -20,6 +20,20 @@ namespace Keepr.Server.Controllers
             _service = service;
         }
 
+                [HttpGet("{id}")]
+        public ActionResult<VaultKeepViewModel> GetById(int id)
+        {
+            try
+            {
+                Keep keep = _service.GetById(id);
+                return Ok(keep);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
 
     [Authorize]
     [HttpPost]
