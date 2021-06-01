@@ -48,7 +48,6 @@ import { computed, reactive } from 'vue'
 import { vaultsService } from '../services/VaultsService'
 import { AppState } from '../AppState'
 import Notification from '../utils/Notification'
-import $ from 'jquery'
 export default {
   name: 'CreateVaultModal',
   setup() {
@@ -61,7 +60,6 @@ export default {
       async createVault() {
         state.newVault.creatorId = state.account.id
         await vaultsService.create(state.newVault)
-        $('#createVault').modal('hide')
         Notification.toast('Successfully created', 'success')
         state.newVault = {}
       }

@@ -1,5 +1,5 @@
 <template>
-  <div class="card col-3">
+  <div class="card col-3" @click="getVault">
     <img :src="vault.imgUrl" class="card-img-top img-fluid w-100" alt="...">
     <div class="card-body">
       <h5 class="card-title">
@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router'
+import { vaultsService } from '../services/VaultsService'
 export default {
   name: 'Vault',
   props: {
@@ -21,13 +23,23 @@ export default {
       required: true
     }
   },
-  setup() {
-    return {}
+  setup(props) {
+    const router = useRouter()
+    return {
+      router,
+      async getVault() {
+        await vaultsService.getById(props.vault.id)
+        router.push({ name: 'VaultDetailsPage', params: { id: props.vault.id } })
+      }
+    }
   },
   components: {}
 }
 </script>
 
 <style lang="scss" scoped>
+img{
+  max-height: 25vh;
+}
 
 </style>

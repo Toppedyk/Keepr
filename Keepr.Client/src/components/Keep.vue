@@ -21,6 +21,7 @@
 
 <script>
 import { keepsService } from '../services/KeepsService'
+import $ from 'jquery'
 import Notification from '../utils/Notification'
 export default {
   name: 'Keep',
@@ -35,6 +36,7 @@ export default {
       async getKeep() {
         try {
           await keepsService.getKeep(props.keep.id)
+          $('#keepDetails').modal('show')
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }

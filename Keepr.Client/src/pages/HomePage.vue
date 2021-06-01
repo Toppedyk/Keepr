@@ -1,4 +1,7 @@
 <template>
+  <div v-if="state.loading === true">
+    <h1>Loading...</h1>
+  </div>
   <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-12">
@@ -19,11 +22,13 @@ export default {
   name: 'Home',
   setup() {
     const state = reactive({
-      keeps: computed(() => AppState.keeps)
+      keeps: computed(() => AppState.keeps),
+      loading: true
     })
     onMounted(async() => {
       try {
         await keepsService.getAll()
+        state.loading = false
       } catch (error) {
         Notification.toast('Error: ' + error, 'error')
       }

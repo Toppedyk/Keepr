@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { computed, onMounted, reactive, watchEffect } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
 import { profilesService } from '../services/ProfilesService'
 import Notification from '../utils/Notification'
@@ -59,11 +59,6 @@ export default {
       vaults: computed(() => AppState.vaults),
       keeps: computed(() => AppState.keeps),
       account: computed(() => AppState.account)
-    })
-    watchEffect(async() => {
-      await profilesService.getById(route.params.id)
-      await vaultsService.getVaultsByProfileId(route.params.id)
-      await keepsService.getKeepsByProfileId(route.params.id)
     })
     onMounted(async() => {
       try {
