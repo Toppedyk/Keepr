@@ -4,6 +4,7 @@ import { audience, clientId, domain } from '../env'
 import router from '../router'
 import { accountService } from './AccountService'
 import { setBearer } from './AxiosService'
+import { keepsService } from './KeepsService'
 import { vaultsService } from './VaultsService'
 // import { vaultsService } from './VaultsService'
 
@@ -26,4 +27,5 @@ AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async function() {
   await accountService.getAccount()
   // NOTE if there is something you want to do once the user is authenticated, place that here
   await vaultsService.getVaultsByAccountId(AppState.account.id)
+  await keepsService.getKeepsByAccountId(AppState.account.id)
 })

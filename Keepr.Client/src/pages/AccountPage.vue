@@ -16,9 +16,35 @@
     <div class="row">
       <div class="col d-flex">
         <h3>Vaults </h3>
-        <button type="button" class="btn btn-success ml-3" data-toggle="modal" data-target="#createVault">
+        <button type="button" class="btn btn-success ml-3" v-if="state.createVault === false" @click="state.createVault=true">
           Add Vault
         </button>
+        <form @submit.prevent="createVault" v-if="state.createVault === true">
+          <div class="form-group">
+            <label for="vault name">Name</label>
+            <input type="text" class="form-control" id="vault name" v-model="state.newVault.name" required>
+          </div>
+          <div class="form-group">
+            <label for="vault description">Description</label>
+            <input type="text" class="form-control" id="vault description" v-model="state.newVault.description">
+          </div>
+          <div class="form-group">
+            <label for="vault image">Image Url</label>
+            <input type="text" class="form-control" id="vault imgUrl" v-model="state.newVault.imgUrl">
+          </div>
+          <label>
+            <input type="checkbox" id="vault privacy" v-model="state.newVault.isPrivate" />
+            Private
+          </label>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" @click="state.createVault=false">
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary">
+              Create
+            </button>
+          </div>
+        </form>
       </div>
     </div>
     <div class="row" v-if="state.vaults.length > 0">
@@ -27,9 +53,31 @@
     <div class="row">
       <div class="col">
         <h3>Keeps</h3>
-        <button type="button" class="btn btn-success ml-3" data-toggle="modal" data-target="#CreateKeepModal">
+        <button type="button" class="btn btn-success ml-3" v-if="state.createKeep === false" @click="state.createKeep=true">
           Add Keep
         </button>
+        <form @submit.prevent="createKeep" v-if="state.createKeep===true">
+          <div class="form-group">
+            <label for="Keep name">Name</label>
+            <input type="text" class="form-control" id="keep name" v-model="state.newKeep.name" required>
+          </div>
+          <div class="form-group">
+            <label for="Keep description">Description</label>
+            <input type="text" class="form-control" id="keep description" v-model="state.newKeep.description">
+          </div>
+          <div class="form-group">
+            <label for="Keep image">Image Url</label>
+            <input type="text" class="form-control" id="keep imgUrl" v-model="state.newKeep.img">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" @click="state.createKeep=false">
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary">
+              Create
+            </button>
+          </div>
+        </form>
       </div>
     </div>
     <div class="row justify-content-center">
@@ -39,8 +87,6 @@
         </div>
       </div>
     </div>
-    <CreateKeepModal />
-    <CreateVaultModal />
   </div>
 </template>
 
@@ -58,8 +104,12 @@ export default {
       loading: true,
       profile: computed(() => AppState.activeProfile),
       vaults: computed(() => AppState.accountVaults),
-      keeps: computed(() => AppState.keeps),
-      account: computed(() => AppState.account)
+      keeps: computed(() => AppState.accountKeeps),
+      account: computed(() => AppState.account),
+      newVault: {},
+      newKeep: {},
+      createVault: false,
+      createKeep: false
     })
     watchEffect(async() => {
       await vaultsService.getVaultsByAccountId(state.account.id)
@@ -76,7 +126,29 @@ export default {
       }
     })
     return {
-      state
+      state,
+      async createVault() {
+        try {
+          state.newVault.creatorId = state.account.id
+          await vaultsService.create(state.newVault)
+          Notification.toast('Successfully created', 'success')
+          state.newVault = {}
+          state.createVault = false
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      },
+      async createKeep() {
+        try {
+          state.newKeep.creatorId = state.account.id
+          await keepsService.create(state.newKeep)
+          Notification.toast('Successfully created', 'success')
+          state.createKeep = false
+          state.newKeep = {}
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      }
     }
   },
   components: {}

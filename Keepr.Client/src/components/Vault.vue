@@ -57,7 +57,7 @@ export default {
             confirmButtonText: 'Yes, delete it!'
           }).then((result) => {
             if (result.isConfirmed) {
-              vaultsService.delete(props.vault.id, state.profile.id)
+              vaultsService.delete(props.vault.id)
               // vaultsService.getVaultsByProfileId(props.vault.creatorId)
               Notification.toast('Successfully Deleted', 'success')
             }

@@ -61,6 +61,7 @@ export default {
       loading: true,
       profile: computed(() => AppState.activeProfile),
       vaults: computed(() => AppState.vaults),
+      accountVaults: computed(() => AppState.accountVaults),
       keeps: computed(() => AppState.keeps),
       account: computed(() => AppState.account)
     })

@@ -19,7 +19,7 @@ class VaultsService {
 
   async create(newVault) {
     const res = await api.post('api/vaults', newVault)
-    this.getVaultsByProfileId(res.data.creatorId)
+    this.getVaultsByAccountId(res.data.creatorId)
   }
 
   async edit(vault) {
@@ -27,9 +27,9 @@ class VaultsService {
     this.getVaultsByProfileId(vault.creatorId)
   }
 
-  async delete(id, profileId) {
+  async delete(id) {
     await api.delete(`api/vaults/${id}`)
-    this.getVaultsByProfileId(profileId)
+    this.getVaultsByAccountId(AppState.account.id)
   }
 }
 export const vaultsService = new VaultsService()
