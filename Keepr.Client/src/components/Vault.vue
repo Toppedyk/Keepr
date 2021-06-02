@@ -10,7 +10,7 @@
       </p>
     </div>
     <div>
-      <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="deleteVault">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="deleteVault" v-if="state.account.id === vault.creatorId">
         Delete
       </button>
     </div>

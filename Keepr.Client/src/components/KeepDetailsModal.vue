@@ -89,7 +89,7 @@ export default {
     const router = useRouter()
     const state = reactive({
       keep: computed(() => AppState.activeKeep),
-      accountVaults: computed(() => AppState.vaults),
+      accountVaults: computed(() => AppState.accountVaults),
       account: computed(() => AppState.account),
       user: computed(() => AppState.user),
       newVaultKeep: {}

@@ -9,7 +9,10 @@
       <h4 class="keep-name mr-4">
         {{ keep.name }}
       </h4>
-      <router-link :to="{name: 'ProfileDetailsPage', params:{id:keep.creator.id}}">
+      <router-link :to="{ name: 'Account' }" v-if="state.account.id===keep.creatorId">
+        <img :src="keep.creator.picture" alt="profile picture" class="rounded-circle small-img">
+      </router-link>
+      <router-link :to="{name: 'ProfileDetailsPage', params:{id:keep.creator.id}}" v-else>
         <img :src="keep.creator.picture" alt="profile picture" class="rounded-circle small-img">
       </router-link>
     </div>
@@ -21,6 +24,8 @@
 import { keepsService } from '../services/KeepsService'
 import $ from 'jquery'
 import Notification from '../utils/Notification'
+import { computed, reactive } from 'vue'
+import { AppState } from '../AppState'
 export default {
   name: 'Keep',
   props: {
@@ -30,7 +35,11 @@ export default {
     }
   },
   setup(props) {
+    const state = reactive({
+      account: computed(() => AppState.account)
+    })
     return {
+      state,
       async getKeep() {
         try {
           await keepsService.getKeep(props.keep.id)
