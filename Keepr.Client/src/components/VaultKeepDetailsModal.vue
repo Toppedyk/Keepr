@@ -55,6 +55,7 @@ import { AppState } from '../AppState'
 import { keepsService } from '../services/KeepsService'
 import Notification from '../utils/Notification'
 import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
 // import { vaultsService } from '../services/VaultsService'
 // import $ from 'jquery'
 export default {
@@ -62,6 +63,7 @@ export default {
   setup() {
     const router = useRouter()
     const state = reactive({
+      profile: computed(() => AppState.activeProfile),
       keep: computed(() => AppState.activeKeep),
       vaultKeep: computed(() => AppState.activeVaultKeep),
       accountVaults: computed(() => AppState.vaults),
@@ -72,9 +74,20 @@ export default {
       router,
       async deleteKeep() {
         try {
-          await keepsService.removeVaultKeep(state.vaultKeep.vaultKeepId)
-          await keepsService.getKeepsByVaultId(state.vaultKeep.vaultId)
-          Notification.toast('Successfully Deleted', 'success')
+          await Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              keepsService.removeVaultKeep(state.vaultKeep.vaultKeepId, state.vaultKeep.vaultId)
+              Notification.toast('Successfully Deleted', 'success')
+            }
+          })
         } catch (error) {
           Notification.toast('Error: ' + error, 'warning')
         }

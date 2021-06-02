@@ -22,6 +22,8 @@ import { computed, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { vaultsService } from '../services/VaultsService'
 import { AppState } from '../AppState'
+import Swal from 'sweetalert2'
+import Notification from '../utils/Notification'
 export default {
   name: 'Vault',
   props: {
@@ -33,7 +35,8 @@ export default {
   setup(props) {
     const router = useRouter()
     const state = reactive({
-      account: computed(() => AppState.account)
+      account: computed(() => AppState.account),
+      profile: computed(() => AppState.activeProfile)
     })
     return {
       router,
@@ -44,8 +47,21 @@ export default {
       },
       async deleteVault() {
         try {
-          await vaultsService.delete(props.vault.id)
-          await vaultsService.getVaultsByProfileId(state.account.id)
+          await Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              vaultsService.delete(props.vault.id, state.profile.id)
+              // vaultsService.getVaultsByProfileId(props.vault.creatorId)
+              Notification.toast('Successfully Deleted', 'success')
+            }
+          })
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }

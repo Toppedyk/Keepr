@@ -22,9 +22,9 @@ class VaultsService {
     this.getVaultsByProfileId(vault.creatorId)
   }
 
-  async delete(id) {
+  async delete(id, profileId) {
     await api.delete(`api/vaults/${id}`)
-    // this.getVaultsByProfileId(profileId)
+    this.getVaultsByProfileId(profileId)
   }
 }
 export const vaultsService = new VaultsService()
