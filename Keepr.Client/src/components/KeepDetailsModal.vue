@@ -39,8 +39,8 @@
             </div>
           </div>
         </div>
-        <div class="modal-footer d-flex justify-content-between">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="deleteKeep">
+        <div class="modal-footer d-flex justify-content-between" v-if="state.user.isAuthenticated">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="deleteKeep" v-if="state.account.id === state.keep.creatorId">
             Delete
           </button>
           <form @submit.prevent="addVaultKeep">
@@ -90,6 +90,8 @@ export default {
     const state = reactive({
       keep: computed(() => AppState.activeKeep),
       accountVaults: computed(() => AppState.vaults),
+      account: computed(() => AppState.account),
+      user: computed(() => AppState.user),
       newVaultKeep: {}
     })
     return {
