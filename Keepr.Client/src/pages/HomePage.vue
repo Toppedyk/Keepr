@@ -47,7 +47,7 @@ export default {
 
 <style scoped lang="scss">
     .card-columns {
-        column-count: 6;
+        column-count: 5;
     }
 @media(max-width: 900px){
       .card-columns {
@@ -55,7 +55,6 @@ export default {
     }
 
 }
-
 @media(max-width: 574px){
       .card-columns {
         column-count: 2;

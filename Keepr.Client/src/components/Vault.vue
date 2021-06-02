@@ -1,5 +1,5 @@
 <template>
-  <div class="card col-3">
+  <div class="card col-md-3 col-6">
     <div class="card-body" @click="getVault">
       <img :src="vault.imgUrl" class="card-img-top img-fluid w-100" alt="...">
       <h5 class="card-title">
@@ -76,5 +76,17 @@ export default {
 img{
   max-height: 25vh;
 }
-
+button{
+  margin: 2px;
+  padding: 3px 10px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 0px #eee;
+  border-radius: 10px;
+  display: block;
+  font-size: .7em;
+}
 </style>

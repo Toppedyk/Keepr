@@ -3,12 +3,16 @@
     <h1>Loading...</h1>
   </div>
   <div class="AccountDetailsPage container-fluid" v-else>
-    <div class="row">
-      <div class="col-2 d-flex">
-        <img :src="state.account.picture" alt="">
+    <div class="row mt-2">
+      <div class="col-md-2 col-4 d-flex">
+        <img :src="state.account.picture" alt="users image" class="img-fluid w-100 rounded-circle">
       </div>
-      <div class="col-10">
-        <h2>{{ state.account.name }}</h2>
+      <div class="col-10 d-flex flex-column">
+        <div>
+          <h2 class="name">
+            {{ state.account.name }}
+          </h2>
+        </div>
         <p>Vaults: <span>{{ state.vaults.length }}</span> </p>
         <p>Keeps: <span>{{ state.keeps.length }}</span></p>
       </div>
@@ -156,9 +160,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .card-columns {
+button{
+  margin: 2px;
+  padding: 3px 10px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 0px #eee;
+  border-radius: 10px;
+  display: block;
+  font-size: .7em;
+}
+.card-columns {
         column-count: 5;
     }
+
 @media(max-width: 900px){
       .card-columns {
         column-count: 3;
@@ -170,5 +188,8 @@ export default {
       .card-columns {
         column-count: 2;
     }
+.name{
+font-size: 1.5rem;
+}
 }
 </style>

@@ -2,13 +2,13 @@
   <div class="Keep card rounded shadow">
     <img :src="keep.img"
          alt="keep image"
-         class="img-fluid w-100 image rounded"
+         class="w-100 image rounded"
          @click="getKeep"
     >
     <div class="card-title info">
-      <h4 class="keep-name mr-4">
+      <p class="keep-name mr-1">
         {{ keep.name }}
-      </h4>
+      </p>
       <router-link :to="{ name: 'Account' }" v-if="state.account.id===keep.creatorId">
         <img :src="keep.creator.picture" alt="profile picture" class="rounded-circle small-img">
       </router-link>
@@ -56,8 +56,14 @@ export default {
 
 <style lang="scss" scoped>
 .card{
-max-width: 20vw;
+  display: block;
+  // margin: 0 !important;
+// max-width: 20vw;
+
 }
+// .card:hover{
+
+// }
 
 .image{
   position: relative;
@@ -72,12 +78,13 @@ display: flex;
 justify-content: space-between;
 align-items: baseline;
 margin-bottom: 0;
+overflow-wrap: break-word;
 }
+
 .keep-name{
   font-size: 1em;
   font-weight: bold;
   color: white;
-  // -webkit-text-stroke: .1px white;
 }
 
 .small-img{

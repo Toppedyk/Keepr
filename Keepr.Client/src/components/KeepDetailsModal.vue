@@ -6,7 +6,7 @@
        aria-hidden="true"
        v-if="state.keep"
   >
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="row">
           <div class="col-6">
