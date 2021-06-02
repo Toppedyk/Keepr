@@ -59,11 +59,15 @@ export default {
     return {
       state,
       async createVault() {
-        state.newVault.creatorId = state.account.id
-        await vaultsService.create(state.newVault)
-        $('#createVault').modal('hide')
-        Notification.toast('Successfully created', 'success')
-        state.newVault = {}
+        try {
+          state.newVault.creatorId = state.account.id
+          await vaultsService.create(state.newVault)
+          $('#createVault').modal('toggle')
+          Notification.toast('Successfully created', 'success')
+          state.newVault = {}
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
       }
     }
   },

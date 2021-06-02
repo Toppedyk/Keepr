@@ -18,17 +18,21 @@ import { computed, onMounted, reactive } from 'vue'
 import Notification from '../utils/Notification'
 import { AppState } from '../AppState'
 import { keepsService } from '../services/KeepsService'
+// import { vaultsService } from '../services/VaultsService'
 export default {
   name: 'Home',
   setup() {
     const state = reactive({
+      vaults: computed(() => AppState.vaults),
       keeps: computed(() => AppState.keeps),
+      account: computed(() => AppState.account),
       loading: true
     })
 
     onMounted(async() => {
       try {
         await keepsService.getAll()
+        // await vaultsService.getVaultsByAccountId(state.account.id)/
         state.loading = false
       } catch (error) {
         Notification.toast('Error: ' + error, 'error')

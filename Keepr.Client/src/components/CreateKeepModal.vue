@@ -1,5 +1,5 @@
 <template>
-  <div class="modal fade" id="CreateKeepModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal" id="CreateKeepModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -44,6 +44,7 @@ import { computed, reactive } from 'vue'
 import { AppState } from '../AppState'
 import { keepsService } from '../services/KeepsService'
 import Notification from '../utils/Notification'
+import $ from 'jquery'
 export default {
   name: 'CreateKeepModal',
   setup() {
@@ -54,10 +55,15 @@ export default {
     return {
       state,
       async createKeep() {
-        state.newKeep.creatorId = state.account.id
-        await keepsService.create(state.newKeep)
-        Notification.toast('Successfully created', 'success')
-        state.newKeep = {}
+        try {
+          state.newKeep.creatorId = state.account.id
+          await keepsService.create(state.newKeep)
+          $('#CreateKeepModal').modal('toggle')
+          Notification.toast('Successfully created', 'success')
+          state.newKeep = {}
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
       }
     }
   },

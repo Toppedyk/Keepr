@@ -16,7 +16,7 @@
     <div class="row">
       <div class="col d-flex">
         <h3>Vaults </h3>
-        <button type="button" class="btn btn-success ml-3" data-toggle="modal" data-target="#createVault">
+        <button type="button" class="btn btn-success ml-3" data-toggle="modal" data-target="#createVault" v-if="state.account.id === route.params.id">
           Add Vault
         </button>
       </div>
@@ -27,7 +27,7 @@
     <div class="row">
       <div class="col">
         <h3>Keeps</h3>
-        <button type="button" class="btn btn-success ml-3" data-toggle="modal" data-target="#CreateKeepModal">
+        <button type="button" class="btn btn-success ml-3" data-toggle="modal" data-target="#CreateKeepModal" v-if="state.account.id === route.params.id">
           Add Keep
         </button>
       </div>
