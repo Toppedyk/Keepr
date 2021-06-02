@@ -45,6 +45,7 @@ namespace Keepr.Server.Repositories
       vk.id AS vaultKeepId,
       vk.keepId AS keepId,
       vk.vaultId AS vaultId,
+      vk.creatorId AS creatorId,
       profile.*
       FROM 
       vault_keeps vk
