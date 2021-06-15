@@ -27,10 +27,6 @@ namespace Keepr.Server.Services
     {
       VaultKeepViewModel vk = _repo.GetById(id);
       Keep keep = _repoKeep.GetById(vk.Id);
-      if(keep.CreatorId != creatorId)
-      {
-        throw new Exception("You cannot delete this");
-      }
       keep.Keeps--;
       _repoKeep.Edit(keep);
       _repo.Delete(id);

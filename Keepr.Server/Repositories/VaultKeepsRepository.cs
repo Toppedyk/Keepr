@@ -43,13 +43,14 @@ namespace Keepr.Server.Repositories
       SELECT 
       k.*,
       vk.id AS vaultKeepId,
-      vk.keepId AS keepId,
+      k.id AS keepId,
       vk.vaultId AS vaultId,
-      profile.*
+      profile.*,
+      profile.id AS creatorId
       FROM 
       vault_keeps vk
       JOIN keeps k ON k.id = vk.keepId
-      JOIN accounts profile ON k.creatorId = profile.id
+      JOIN accounts profile ON vk.creatorId = profile.id
       WHERE vk.id = @id;";
       return _db.Query<VaultKeepViewModel, Profile, VaultKeepViewModel>(sql,(v,p)=>{
         v.Creator = p;

@@ -32,7 +32,7 @@ namespace Keepr.Server
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddAuthentication(options =>
+        services.AddAuthentication(options =>
       {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;

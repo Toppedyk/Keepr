@@ -39,7 +39,7 @@
             </div>
           </div>
         </div>
-        <div class="modal-footer d-flex justify-content-between">
+        <div class="modal-footer d-flex justify-content-between" v-if="state.account.id === state.vaultKeep.creator.id">
           <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="deleteKeep">
             Remove Keep
           </button>
@@ -67,7 +67,9 @@ export default {
       keep: computed(() => AppState.activeKeep),
       vaultKeep: computed(() => AppState.activeVaultKeep),
       accountVaults: computed(() => AppState.vaults),
-      newVaultKeep: {}
+      newVaultKeep: {},
+      account: computed(() => AppState.account)
+
     })
     return {
       state,
